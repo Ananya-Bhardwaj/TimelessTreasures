@@ -17,9 +17,10 @@ export const Row = ({ item }) => {
     setAmount(formatMoney(item.currency, status.amount));
     setBids(status.bids);
     if (status.winner) {
-      getDoc(doc(db, "users", status.winner)).then((user) => {
-        setWinner(user.get("name"));
-      });
+      // getDoc(doc(db, "users", status.winner)).then((user) => {
+      //   setWinner(user.get("name"));
+      // });
+      setWinner(status.winner);
     } else {
       setWinner("");
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   BrowserRouter as Router,
@@ -20,20 +20,56 @@ import LoginPage from "./pages/Login";
 import ArtworksPage from "./pages/Artworks";
 import ArtworksChicago from "./pages/Artworks_Chicago";
 import ProductsPage from "./pages/Misc_Sale";
+import { auth, db } from "./firebase/config";
+import { getDoc, doc } from "firebase/firestore";
+import { use } from "react";
 
 function App() {
-  const demo = true;
-  const { admin } = AutoSignIn();
+  const [admin, setAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
+  // Fetch admin status after login
+  useEffect(() => {
+    const checkAdmin = async () => {
+      if (!auth.currentUser) {
+        setLoading(false);
+        return;
+      }
+
+      const userDocRef = doc(db, "users", auth.currentUser.uid);
+      try {
+        const docSnap = await getDoc(userDocRef);
+        if (docSnap.exists() && docSnap.data().role === "admin") {
+          setAdmin(true);
+        } else {
+          setAdmin(false);
+        }
+      } catch (error) {
+        console.error("Error checking admin status:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAdmin();
+  }, []);
+
+  // Loader while checking admin status
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  // Providers wrap the app
   const Providers = ({ children }) => (
-    <ItemsProvider demo={demo}>
+    <ItemsProvider demo={false}>
       <ModalsProvider>{children}</ModalsProvider>
     </ItemsProvider>
   );
 
-  function ProtectedRoute({ children, condition }) {
-    return condition ? children : <Navigate to="/" />;
-  }
+  // ProtectedRoute to prevent access to restricted pages
+  // function ProtectedRoute({ children, condition }) {
+  //   return condition ? children : <Navigate to="/" />;
+  // }
 
   return (
     <Providers>
@@ -50,14 +86,14 @@ function App() {
                 <Navbar admin={admin} />
                 <Routes>
                   <Route path="/" element={<HomePage />} />
-                  <Route
+                  {/* <Route
                     path="/admin"
                     element={
                       <ProtectedRoute condition={admin}>
                         <AdminPage />
                       </ProtectedRoute>
                     }
-                  />
+                  /> */}
                 </Routes>
                 <Footer />
               </>
@@ -65,44 +101,44 @@ function App() {
           />
           <Route
             exact
-            path={import.meta.env.BASE_URL + "/register"}
+            path={"/register"}
             element={
               <RegisterPage />
             }
           />
           <Route
             exact
-            path={import.meta.env.BASE_URL + "/login"}
+            path={"/login"}
             element={
               <LoginPage />
             }
           />
           <Route
             exact
-            path={import.meta.env.BASE_URL + "/register"}
+            path={"/register"}
             element={
               <RegisterPage />
             }
           />
           <Route
             exact
-            path={import.meta.env.BASE_URL + "/login"}
-            element={
-              <LoginPage />
-            }
-          />
-          <Route
-            exact
-            path={import.meta.env.BASE_URL + "/artworks"}
+            path={"/artworks"}
             element={
               <ArtworksChicago />
             }
           />
           <Route
             exact
-            path={import.meta.env.BASE_URL + "/products"}
+            path={"/products"}
             element={
               <ProductsPage />
+            }
+          />
+          <Route
+            exact
+            path={"/admin"}
+            element={
+              <AdminPage />
             }
           />
         </Routes>

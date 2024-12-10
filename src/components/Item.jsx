@@ -24,7 +24,7 @@ export const Item = ({ item }) => {
     const updateTimer = () => {
       const now = Date.now();
       const remaining = item.endTime - now;
-
+      
       if (remaining > 0) {
         setTimeLeft(formatTime(remaining));
         requestAnimationFrame(updateTimer);

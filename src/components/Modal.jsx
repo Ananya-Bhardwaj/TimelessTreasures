@@ -1,14 +1,13 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, act } from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import { itemStatus } from "../utils/itemStatus";
 import { formatField, formatMoney } from "../utils/formatString";
-import { updateProfile, onAuthStateChanged } from "firebase/auth";
+import { updateProfile} from "firebase/auth";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
 import { ModalsContext } from "../contexts/ModalsProvider";
 import { ModalTypes } from "../utils/modalTypes";
-import { useNavigate } from "react-router-dom";
 
 const Modal = ({ type, title, children }) => {
   const { closeModal, currentModal } = useContext(ModalsContext);
@@ -54,27 +53,12 @@ const ItemModal = () => {
   const [isSubmitting, setIsSubmitting] = useState("");
   const [feedback, setFeedback] = useState("");
   const [minBid, setMinBid] = useState("-.--");
-  const [user, setUser] = useState(null); // Store user object
-
-  const navigate = useNavigate();
-
-    // Check if user is authenticated
-    useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        if (currentUser) {
-          setUser(currentUser); // Set user data
-        } else {
-          // Redirect to login page if not logged in
-          navigate("/login");
-        }
-      });
+  const { bids, amount, winner } = itemStatus(activeItem);
+  const [ bidEnded, setBidEnded ] = useState(false);
   
-      return () => unsubscribe(); // Cleanup listener on unmount
-    }, [navigate]);
-
   useEffect(() => {
     if (activeItem.secondaryImage === undefined) return;
-    import(`../assets/${activeItem.secondaryImage}.glb`).then((src) => {
+    import(`../assets/${activeItem.secondaryImage}.png`).then((src) => {
       setSecondaryImageSrc(src.default)
     })
   }, [activeItem.secondaryImage])
@@ -83,6 +67,18 @@ const ItemModal = () => {
     const status = itemStatus(activeItem);
     setMinBid(formatMoney(activeItem.currency, status.amount + minIncrease));
   }, [activeItem]);
+
+  useEffect(() => {
+    const now = Date.now();
+    const endTime = new Date(activeItem.endTime);
+    if (endTime < now) {
+      setBidEnded(true);
+    }
+    else{
+      setBidEnded(false);
+    }
+  }, [activeItem.endTime, activeItem]);
+  
 
   const delayedClose = () => {
     setTimeout(() => {
@@ -106,7 +102,7 @@ const ItemModal = () => {
       return;
     }
     // Ensure user has provided a username
-    if (user == null) {
+    if (auth.currentUser == null) {
       setFeedback("You must provide a username before bidding!");
       setValid("is-invalid");
       setTimeout(() => {
@@ -128,7 +124,7 @@ const ItemModal = () => {
     const status = itemStatus(activeItem);
     // Ensure input is large enough
     if (amount < status.amount + minIncrease) {
-      setFeedback("You did not bid enough!");
+      setFeedback(`You did not bid enough! Bid more than ${minIncrease} than the current bid.`);
       setValid("is-invalid");
       setIsSubmitting(false);
       return;
@@ -144,11 +140,10 @@ const ItemModal = () => {
     updateDoc(doc(db, "auction", "items"), {
       [formatField(activeItem.id, status.bids + 1)]: {
         amount,
-        uid: user.uid,
+        uid: auth.currentUser.uid,
       },
     });
-    console.debug("handleSubmitBid() write to auction/items");
-    alert("Bid submitted!");
+    console.debug("handleSubmidBid() write to auction/items");
     setValid("is-valid");
     delayedClose();
   };
@@ -167,30 +162,51 @@ const ItemModal = () => {
 
   return (
     <Modal type={ModalTypes.ITEM} title={activeItem.title}>
-      <div className="modal-body">
-        <p>{activeItem.detail}</p>
-      </div>
-      <div className="modal-footer justify-content-start">
-        <div className="input-group mb-2">
-          <span className="input-group-text">{activeItem.currency}</span>
-          <input
-            className={`form-control ${valid}`}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-            />
-          <button
-            type="submit"
-            className="btn btn-primary"
-            onClick={handleSubmitBid}
-            disabled={isSubmitting}
-            >
-            Submit bid
-          </button>
-          <div className="invalid-feedback">{feedback}</div>
+      {bidEnded ? (
+        <div className="modal-body">
+          <p>
+            Congratulations!!{" "}
+          </p>
+            {winner === auth.currentUser.uid ? (
+              <>
+              <p>You are the winner for the item!!</p>
+              <button onClick={(e) => e.preventDefault()}>Pay</button>
+              </>
+              ) : ( 
+              <p>`The winner for the item is ${winner}`</p>
+            )}
         </div>
-        <label className="form-label">Enter {minBid} or more</label>
-        <p className="text-muted">(This is just a demo, you&apos;re not bidding real money)</p>
-      </div>
+      ) : (
+        <>
+          <div className="modal-body">
+            <p>{activeItem.detail}</p>
+            {/* <img src={secondaryImageSrc} className="img-fluid" alt={activeItem.title} /> */}
+          </div>
+          <div className="modal-footer justify-content-start">
+            <div className="input-group mb-2">
+              <span className="input-group-text">{activeItem.currency}</span>
+              <input
+                className={`form-control ${valid}`}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+              />
+              <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={handleSubmitBid}
+                disabled={isSubmitting}
+              >
+                Submit bid
+              </button>
+              <div className="invalid-feedback">{feedback}</div>
+            </div>
+            <label className="form-label">Enter {minBid} or more</label>
+            <p className="text-muted">
+              (This is just a demo, you&apos;re not bidding real money)
+            </p>
+          </div>
+        </>
+      )}
     </Modal>
   );
 };
@@ -222,7 +238,8 @@ const SignUpModal = () => {
     <Modal type={ModalTypes.SIGN_UP} title="Sign up for Markatplace Auction">
       <div className="modal-body">
         <p>
-          Username and password is used to identify you as a bidder. We don&apos;t store any personal information.
+          We use anonymous authentication provided by Google. Your account is
+          attached to your device signature.
         </p>
         <p>The username just lets us know who&apos;s bidding!</p>
         <form onSubmit={(e) => e.preventDefault()}>
@@ -256,4 +273,39 @@ const SignUpModal = () => {
   );
 };
 
-export { ItemModal, SignUpModal };
+const WinnerModal = () => {
+  const [username, setUsername] = useState("");
+  const [valid, setValid] = useState("");
+  const { activeItem, openModal, closeModal } = useContext(ModalsContext);
+  const { bids, amount, winner } = itemStatus(activeItem);
+
+  return (
+    <Modal type={ModalTypes.WINNER} title="Winner for the item!!">
+      <div className="modal-body">
+        <p>
+          Congratulations!! 
+          {
+            winner === auth.currentUser.uid ? 
+            "You are the winner for the item!!" : 
+            `The winner for the item is ${username}`
+          }
+        </p>
+        <button onClick={(e) => e.preventDefault()}>Pay</button>
+      </div>
+      <div className="modal-footer">
+        <button type="button" className="btn btn-secondary" onClick={closeModal}>
+          Cancel
+        </button>
+        {/* <button
+          type="submit"
+          className="btn btn-primary"
+          onClick={handleSignUp}
+        >
+          Sign up
+        </button> */}
+      </div>
+    </Modal>
+  );
+};
+
+export { ItemModal, SignUpModal, WinnerModal };

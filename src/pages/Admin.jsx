@@ -1,8 +1,11 @@
 import { editItems } from "../firebase/utils";
 import Table from "../components/Table";
+import Navbar from "../components/Navbar";
 
 function AdminPage() {
   return (
+    <>
+    <Navbar />
     <div className="container mt-3">
       <div className="d-flex justify-content-left mb-3">
         <button
@@ -20,6 +23,7 @@ function AdminPage() {
       </div>
       <Table />
     </div>
+            </>
   );
 }
 

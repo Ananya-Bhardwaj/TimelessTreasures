@@ -1,14 +1,29 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useLocation } from "react-router";
-import { auth } from "../firebase/config";
+import { auth, db } from "../firebase/config";
 import { signOut, onAuthStateChanged } from "firebase/auth";
+import { getDocs, doc, query, where, collection} from "firebase/firestore";
 
-const Navbar = ({ admin }) => {
+const Navbar = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null); // Store user object
   const [adminButtonText, setAdminButtonText] = useState("Admin");
   const location = useLocation();
+
+  // Checks the user is logged in and if their user data contains the admin password
+  const [admin, setAdmin] = useState(false);
+
+  useEffect(() => {
+    if (!auth.currentUser) {
+      return;
+    }
+    console.log(auth.currentUser);
+    if (auth.currentUser.email === "ananya.bhar@gmail.com"){
+      setAdmin(true);
+    }
+    
+  }, []);
 
   // Check if user is authenticated
   useEffect(() => {
