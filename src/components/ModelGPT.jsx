@@ -5,24 +5,15 @@ import { Card, CardContent, Typography, CardActions, Button } from "@mui/materia
 import * as modelName from "../assets"; 
 
 const Model = ({ modelPath }) => {
-  console.log("Model Path:", modelPath); // Log the model path
-
   const { scene } = useGLTF(modelPath);
   return <primitive object={scene} scale={1} />;
 };
 
 const ModelCard = ({ model, title, subtitle, detail, amount, bids, timeLeft, onButtonClick }) => {
-  const getKeyByValue = () => {
-    for (const key in modelName) {
-      if (modelName[key] === model) {
-        return key;
-      }
-    }
-  };
 
   return (
     <>
-    <Card style={{ width: 400, margin: "20px auto", borderRadius: 10, boxShadow: "0 4px 10px rgba(0,0,0,0.2)" }}>
+    <Card onClick={onButtonClick} style={{ width: 400, margin: "20px auto", borderRadius: 10, boxShadow: "0 4px 10px rgba(0,0,0,0.2)" }}>
       <div style={{ height: 300 }}>
         <Canvas>
           <ambientLight intensity={0.5} />
@@ -52,7 +43,7 @@ const ModelCard = ({ model, title, subtitle, detail, amount, bids, timeLeft, onB
       </CardContent>
       {/* <CardActions>
         <Button size="small" color="primary" onClick={onButtonClick}>
-          Learn More
+          Bid
         </Button>
       </CardActions> */}
     </Card>

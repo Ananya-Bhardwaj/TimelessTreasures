@@ -15,6 +15,8 @@ import { SignUpModal } from "./components/Modal";
 import HomePage from "./pages/Home";
 import AdminPage from "./pages/Admin";
 import Footer from "./components/Footer";
+import RegisterPage from "./pages/Register";
+import LoginPage from "./pages/Login";
 
 function App() {
   const demo = true;
@@ -47,6 +49,20 @@ function App() {
               <ProtectedRoute condition={admin}>
                 <AdminPage />
               </ProtectedRoute>
+            }
+          />
+          <Route
+            exact
+            path={import.meta.env.BASE_URL + "/register"}
+            element={
+              <RegisterPage />
+            }
+          />
+          <Route
+            exact
+            path={import.meta.env.BASE_URL + "/login"}
+            element={
+              <LoginPage />
             }
           />
         </Routes>

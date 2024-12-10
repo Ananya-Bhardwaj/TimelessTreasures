@@ -7,9 +7,7 @@ import PropTypes from "prop-types";
 import ModelCard from "./ModelGPT";
 
 export const Item = ({ item }) => {
-  console.log(item); 
-
-  // const { openModal } = useContext(ModalsContext);
+  const { openModal } = useContext(ModalsContext);
 
   // const [primaryImageSrc, setPrimaryImageSrc] = useState("");
   const [bids, setBids] = useState(0);
@@ -55,8 +53,8 @@ export const Item = ({ item }) => {
         amount={amount}
         bids={bids}
         timeLeft={timeLeft} 
+        onButtonClick={() => openModal(ModalTypes.ITEM, item)}
       />
-      {/* {console.log(primaryImageSrc)} */}
     </div>
   );
 };

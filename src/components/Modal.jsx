@@ -46,8 +46,8 @@ Modal.propTypes = {
 const ItemModal = () => {
   const { activeItem, openModal, closeModal } = useContext(ModalsContext);
   const [secondaryImageSrc, setSecondaryImageSrc] = useState("");
-  const minIncrease = 1;
-  const maxIncrease = 10;
+  const minIncrease = 10000;
+  const maxIncrease = 100000;
   const [bid, setBid] = useState();
   const [valid, setValid] = useState("");
   const [isSubmitting, setIsSubmitting] = useState("");
