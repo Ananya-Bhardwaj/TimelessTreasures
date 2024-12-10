@@ -34,7 +34,7 @@ function App() {
 
   return (
     <Providers>
-      <Router basename="/auction-website">
+      <Router>
         <Routes>
           {/* Landing Page */}
           <Route path="/" element={<LandingPage />} />
