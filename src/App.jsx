@@ -17,6 +17,7 @@ import { AutoSignIn } from "./firebase/AutoSignIn";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
+import CategoryPage from "./pages/CategoryPage";
 
 function App() {
   const demo = true;
@@ -62,30 +63,16 @@ function App() {
           />
           <Route
             exact
-            path={import.meta.env.BASE_URL + "/register"}
-            element={
-              <RegisterPage />
-            }
-          />
-          <Route
-            exact
-            path={import.meta.env.BASE_URL + "/login"}
+            path={ "/login"}
             element={
               <LoginPage />
             }
           />
           <Route
             exact
-            path={import.meta.env.BASE_URL + "/register"}
+            path={"/register"}
             element={
               <RegisterPage />
-            }
-          />
-          <Route
-            exact
-            path={import.meta.env.BASE_URL + "/login"}
-            element={
-              <LoginPage />
             }
           />
         </Routes>

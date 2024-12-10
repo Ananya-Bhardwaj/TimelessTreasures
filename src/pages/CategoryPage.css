@@ -1,0 +1,76 @@
+/* General resets */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
+}
+
+.category-page {
+    position: relative;
+    text-align: center;
+    padding: 50px 20px;
+    background-image: url("https://wallpapercave.com/wp/wp4012944.jpg"); /* Background image */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Keeps the background fixed */
+    background-color: rgba(0, 0, 0, 0.5); /* Opaque background */
+    color: white;
+    min-height: 100vh;
+}
+
+.page-title {
+    font-size: 2.5em;
+    color: white;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.category-container {
+    display: flex;
+    justify-content: space-between; /* Arrange items in a row */
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.category-item {
+    position: relative;
+    background-color: rgba(200, 220, 240, 0.8); /* Light greyish-bluish background */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    height: 300px;  /* Fixed height to maintain a consistent look */
+    width: 230px;   /* Fixed width for cards */
+    overflow: hidden;
+}
+
+.category-item:hover {
+    transform: scale(1.05);  /* Hover effect to slightly enlarge the card */
+}
+
+.category-title {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    z-index: 2;  /* Ensure the title appears on top of any overlay content */
+    color: black;  /* Change title text to black */
+}
+
+.category-description {
+    font-size: 1.1em;
+    max-width: 70%;
+    margin: 0 auto;
+    opacity: 0;  /* Initially hide the description */
+    color: black;  /* Change description text to black */
+    transition: opacity 0.3s ease-in-out;  /* Smooth transition for description visibility */
+}
+
+.category-item:hover .category-description {
+    opacity: 1;  /* Show the description on hover */
+}
