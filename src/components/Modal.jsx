@@ -8,6 +8,7 @@ import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
 import { ModalsContext } from "../contexts/ModalsProvider";
 import { ModalTypes } from "../utils/modalTypes";
+import StripeButton from "./StripeButton";
 
 const Modal = ({ type, title, children }) => {
   const { closeModal, currentModal } = useContext(ModalsContext);
@@ -170,7 +171,8 @@ const ItemModal = () => {
             {winner === auth.currentUser.uid ? (
               <>
               <p>You are the winner for the item!!</p>
-              <button onClick={(e) => e.preventDefault()}>Pay</button>
+              <StripeButton priceId="price_1QUWOeSDfaeqN3M50IfhOjDA" />
+
               </>
               ) : ( 
               <p>`The winner for the item is ${winner}`</p>
@@ -290,8 +292,9 @@ const WinnerModal = () => {
             `The winner for the item is ${username}`
           }
         </p>
-        <button onClick={(e) => e.preventDefault()}>Pay</button>
-        <StripeButton  priceId={price_1QUWOeSDfaeqN3M50IfhOjDA} />
+        {/* <button onClick={(e) => e.preventDefault()}>Pay</button> */}
+        <StripeButton priceId="price_1QUWOeSDfaeqN3M50IfhOjDA" />
+
       </div>
       <div className="modal-footer">
         <button type="button" className="btn btn-secondary" onClick={closeModal}>

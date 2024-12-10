@@ -2,7 +2,6 @@
 /* General Page Styles */
 .category-pager {
   margin: 0; /* Remove any default margin */
-  padding: 0; /* Remove any default padding */
   font-family: "Poppins", sans-serif;
   background: url("https://wallpapercave.com/wp/wp4012944.jpg") no-repeat center center fixed;
   background-size: cover; /* Ensure the image covers the entire area */
@@ -12,6 +11,7 @@
   justify-content: center;
   align-items: center;
   overflow: hidden; /* Prevent unwanted scrollbars */
+  padding: 20px;
 }
 /* General Page Styles */
 .category-pager {
@@ -56,6 +56,7 @@
   margin-bottom: 2rem;
   z-index: 1;
   position: relative;
+  padding: 40px;
 }
 
 /* Grid Layout for Cards */
