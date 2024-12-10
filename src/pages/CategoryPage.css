@@ -1,0 +1,112 @@
+General Page Styles
+/* General Page Styles */
+.category-pager {
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Remove any default padding */
+  font-family: "Poppins", sans-serif;
+  background: url("https://wallpapercave.com/wp/wp4012944.jpg") no-repeat center center fixed;
+  background-size: cover; /* Ensure the image covers the entire area */
+  width: 100vw; /* Make it span the full viewport width */
+  height: 100vh; /* Make it span the full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevent unwanted scrollbars */
+}
+/* General Page Styles */
+.category-pager {
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Remove any default padding */
+  font-family: "Poppins", sans-serif;
+  background: url("https://wallpapercave.com/wp/wp4012944.jpg") no-repeat center center fixed;
+  background-size: cover; /* Ensure the image covers the entire area */
+  width: 100vw; /* Make it span the full viewport width */
+  height: 100vh; /* Make it span the full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevent unwanted scrollbars */
+}
+
+
+.category-page {
+  position: relative;
+
+  height: 100%;
+  
+}
+
+.category-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Overlay */
+  filter: blur(10px); /* Blur effect */
+  z-index: 0;
+}
+
+/* Title */
+.page-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 2rem;
+  z-index: 1;
+  position: relative;
+}
+
+/* Grid Layout for Cards */
+.category-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  z-index: 1;
+  position: relative;
+}
+
+/* Individual Card Styles */
+.category-item {
+  background: rgba(255, 255, 255, 0.6); /* Semi-transparent */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.category-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.category-item:hover .category-title {
+  color: #000;
+}
+
+/* Hover Effect for Description */
+.category-description {
+  font-size: 1rem;
+  color: #555;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.category-item:hover .category-description {
+  opacity: 1;
+}

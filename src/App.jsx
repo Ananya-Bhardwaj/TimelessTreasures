@@ -17,6 +17,7 @@ import { AutoSignIn } from "./firebase/AutoSignIn";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
+import CategoryPage from "./pages/CategoryPage";
 import ArtworksPage from "./pages/Artworks";
 import ArtworksChicago from "./pages/Artworks_Chicago";
 import ProductsPage from "./pages/Misc_Sale";
@@ -106,40 +107,45 @@ function App() {
               <RegisterPage />
             }
           />
-          <Route
+           <Route
             exact
             path={"/login"}
             element={
               <LoginPage />
             }
           />
-          <Route
+
+            {/* <Route
             exact
             path={"/register"}
             element={
-              <RegisterPage />
+              <HomePage />
             }
-          />
+          /> */}
+          
           <Route
-            exact
             path={"/artworks"}
             element={
               <ArtworksChicago />
             }
           />
           <Route
-            exact
-            path={"/products"}
-            element={
-              <ProductsPage />
-            }
-          />
-          <Route
-            exact
             path={"/admin"}
             element={
               <AdminPage />
             }
+          />
+          <Route 
+            path="/category"
+            element={<CategoryPage />}
+          />
+          <Route 
+            path="/antiques"
+            element={<HomePage />}
+          />
+          <Route 
+            path="/products"
+            element={<ProductsPage />}
           />
         </Routes>
       </Router>

@@ -24,6 +24,19 @@ const ArtworksChicago = () => {
     fetchArtworks();
   }, []);
 
+  const truncateDescription = (description, lineLimit) => {
+    // Create a temporary DOM element to extract text
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = description;
+    const plainText = tempDiv.textContent || tempDiv.innerText || "";
+  
+    // Truncate based on character limit for 3 lines (you may adjust the limit as needed)
+    const characterLimit = 150; // Adjust this limit based on expected line length
+    return plainText.length > characterLimit
+      ? plainText.slice(0, characterLimit) + "..."
+      : plainText;
+  };  
+
   if (loading) return <p>Loading artworks...</p>;
   if (error) return <p>{error}</p>;
 
@@ -61,10 +74,12 @@ const ArtworksChicago = () => {
                 <p className="card-text">
                   <strong>Description:</strong>{" "}
                   {artwork.description ? (
-                      <span dangerouslySetInnerHTML={{ __html: artwork.description }} />
-                    ) : (
+                        <span>
+                            {truncateDescription(artwork.description, 3)}
+                        </span>
+                        ) : (
                         "No description available."
-                    )}
+                        )}
                 </p>
               </div>
             </div>
