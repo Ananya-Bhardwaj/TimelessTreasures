@@ -1,8 +1,13 @@
 *{
   padding: 0;
-}
-html * {
   font-family: "Roboto", sans-serif;
+}
+
+html body{
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden; /* Optional: to disable horizontal scrolling */
+  overflow-y: auto; /* Ensures vertical scrolling */
 }
 
 /* Bootstrap tweaks */

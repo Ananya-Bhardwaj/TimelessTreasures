@@ -17,6 +17,9 @@ import { AutoSignIn } from "./firebase/AutoSignIn";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
+import ArtworksPage from "./pages/Artworks";
+import ArtworksChicago from "./pages/Artworks_Chicago";
+import ProductsPage from "./pages/Misc_Sale";
 
 function App() {
   const demo = true;
@@ -86,6 +89,20 @@ function App() {
             path={import.meta.env.BASE_URL + "/login"}
             element={
               <LoginPage />
+            }
+          />
+          <Route
+            exact
+            path={import.meta.env.BASE_URL + "/artworks"}
+            element={
+              <ArtworksChicago />
+            }
+          />
+          <Route
+            exact
+            path={import.meta.env.BASE_URL + "/products"}
+            element={
+              <ProductsPage />
             }
           />
         </Routes>

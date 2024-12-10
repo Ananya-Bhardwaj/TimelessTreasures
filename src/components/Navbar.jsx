@@ -2,46 +2,47 @@ import { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useLocation } from "react-router";
 import { auth } from "../firebase/config";
-import { onAuthStateChanged } from "firebase/auth";
-import { ModalsContext } from "../contexts/ModalsProvider";
-import { ModalTypes } from "../utils/modalTypes";
+import { signOut, onAuthStateChanged } from "firebase/auth";
 
 const Navbar = ({ admin }) => {
-  const openModal = useContext(ModalsContext).openModal;
   const navigate = useNavigate();
-  const [user, setUser] = useState("");
-  const [authButtonText, setAuthButtonText] = useState("Sign up");
+  const [user, setUser] = useState(null); // Store user object
   const [adminButtonText, setAdminButtonText] = useState("Admin");
   const location = useLocation();
 
+  // Check if user is authenticated
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user && user.displayName != null) {
-        setUser(`Hi ${user.displayName}`);
-        setAuthButtonText("Sign out");
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser); // Set user data
+      } else {
+        // Redirect to login page if not logged in
+        navigate("/login");
       }
     });
 
-    // Clean up the onAuthStateChanged listener when the component unmounts
-    return () => unsubscribe();
-  }, [user.displayName]);
+    return () => unsubscribe(); // Cleanup listener on unmount
+  }, [navigate]);
 
+  // Handle Admin button toggle between Home and Admin routes
   const handleAdmin = () => {
     if (location.pathname.includes("admin")) {
-      navigate(import.meta.env.BASE_URL);
+      navigate("/"); // Navigate to Home
       setAdminButtonText("Admin");
     } else {
-      navigate(import.meta.env.BASE_URL + "admin");
+      navigate("/admin"); // Navigate to Admin Page
       setAdminButtonText("Home");
     }
   };
 
-  const handleAuth = () => {
-    if (user) {
-      setUser("");
-      setAuthButtonText("Sign up");
-    } else {
-      openModal(ModalTypes.SIGN_UP);
+  // Handle Logout functionality
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Firebase sign out
+      setUser(null); // Clear user data
+      navigate("/login"); // Redirect to login page
+    } catch (error) {
+      console.error("Error during logout:", error);
     }
   };
 
@@ -49,21 +50,31 @@ const Navbar = ({ admin }) => {
     <nav className="navbar navbar-dark bg-primary">
       <div className="container-fluid">
         <div className="navbar-brand mb-0 h1 me-auto">
-          <img
+          {/* <img
             src={import.meta.env.BASE_URL + "logo.png"}
             alt="Logo"
             width="30"
             height="24"
             className="d-inline-block align-text-top"
-          />
+          /> */}
           Timeless Treasures
         </div>
         <div className="row row-cols-auto">
-          <div className="navbar-brand">{user}</div>
+          <div className="navbar-brand">{user && `Hi ${user.email}`}</div>
           {admin && (
-            <button onClick={handleAdmin} className="btn btn-secondary me-2">{adminButtonText}</button>
+            <button
+              onClick={handleAdmin}
+              className="btn btn-secondary me-2"
+            >
+              {adminButtonText}
+            </button>
           )}
-          <button onClick={handleAuth} className="btn btn-secondary me-2">{authButtonText}</button>
+          <button
+            onClick={handleLogout}
+            className="btn btn-secondary me-2"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </nav>
@@ -71,7 +82,7 @@ const Navbar = ({ admin }) => {
 };
 
 Navbar.propTypes = {
-  admin: PropTypes.bool
-}
+  admin: PropTypes.bool,
+};
 
 export default Navbar;

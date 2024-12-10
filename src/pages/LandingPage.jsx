@@ -6,7 +6,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate("/app");
+    navigate("/login");
   };
 
   return (

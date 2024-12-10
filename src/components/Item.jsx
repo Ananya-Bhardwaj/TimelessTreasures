@@ -44,17 +44,19 @@ export const Item = ({ item }) => {
 
 
   return (
-    <div className="col">
-      <ModelCard 
-        model={item.modelName}
-        title={item.title}
-        subtitle={item.subtitle}
-        description={item.detail}
-        amount={amount}
-        bids={bids}
-        timeLeft={timeLeft} 
-        onButtonClick={() => openModal(ModalTypes.ITEM, item)}
-      />
+    <div className="cards-container">
+      <div className="col">
+        <ModelCard 
+          model={item.modelName}
+          title={item.title}
+          subtitle={item.subtitle}
+          detail={item.detail}
+          amount={amount}
+          bids={bids}
+          timeLeft={timeLeft} 
+          onButtonClick={() => openModal(ModalTypes.ITEM, item)}
+        />
+      </div>
     </div>
   );
 };

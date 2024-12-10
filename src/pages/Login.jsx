@@ -11,9 +11,10 @@ const LoginPage = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
+      .then((userCredential) => {
         alert("Login Successful!");
-        navigate("/");
+        localStorage.setItem('user', JSON.stringify(userCredential));
+        navigate("/app");
       })
       .catch((error) => alert(error.message));
   };
