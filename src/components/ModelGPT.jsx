@@ -22,7 +22,7 @@ const ModelCard = ({ model, title, subtitle, detail, amount, bids, timeLeft, onB
 
   return (
     <>
-    <Card style={{ width: 400, margin: "20px auto", borderRadius: 10, boxShadow: "0 4px 10px rgba(0,0,0,0.2)" }}>
+    <Card style={{ width: 400, margin: "100px auto", borderRadius: 10, boxShadow: "0 4px 10px rgba(0,0,0,0.2)" , padding :"50px"}}>
       <div style={{ height: 300 }}>
         <Canvas>
           <ambientLight intensity={0.5} />

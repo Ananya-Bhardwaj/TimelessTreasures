@@ -1,64 +1,71 @@
+import React from "react";
 import PropTypes from "prop-types";
-import "./App.css";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { AutoSignIn } from "./firebase/AutoSignIn";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import { ItemsProvider } from "./contexts/ItemsProvider";
 import { ModalsProvider } from "./contexts/ModalsProvider";
-import Navbar from "./components/Navbar";
-import { SignUpModal } from "./components/Modal";
 import HomePage from "./pages/Home";
 import AdminPage from "./pages/Admin";
-import Footer from "./components/Footer";
+import LandingPage from "./pages/LandingPage";
+import { AutoSignIn } from "./firebase/AutoSignIn";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const demo = true;
-
   const { admin } = AutoSignIn();
 
-  const Providers = ({ children }) => {
-    return (
-      <ItemsProvider demo={demo}>
-        <ModalsProvider>{children}</ModalsProvider>
-      </ItemsProvider>
-    );
-  };
+  const Providers = ({ children }) => (
+    <ItemsProvider demo={demo}>
+      <ModalsProvider>{children}</ModalsProvider>
+    </ItemsProvider>
+  );
 
   function ProtectedRoute({ children, condition }) {
-    return condition ? children : <Navigate to={import.meta.env.BASE_URL} />;
+    return condition ? children : <Navigate to="/" />;
   }
 
   return (
     <Providers>
-      <Router>
-        <Navbar admin={admin} />
-        <SignUpModal />
+      <Router basename="/auction-website">
         <Routes>
-          <Route path={import.meta.env.BASE_URL} Component={HomePage} />
+          {/* Landing Page */}
+          <Route path="/" element={<LandingPage />} />
+
+          {/* Main App */}
           <Route
-            exact
-            path={import.meta.env.BASE_URL + "admin"}
+            path="/app"
             element={
-              <ProtectedRoute condition={admin}>
-                <AdminPage />
-              </ProtectedRoute>
+              <>
+                <Navbar admin={admin} />
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route
+                    path="/admin"
+                    element={
+                      <ProtectedRoute condition={admin}>
+                        <AdminPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Routes>
+                <Footer />
+              </>
             }
           />
         </Routes>
       </Router>
-      <Footer />
     </Providers>
   );
 }
 
 App.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element),
-  condition: PropTypes.bool
-}
+  children: PropTypes.node,
+};
 
 export default App;

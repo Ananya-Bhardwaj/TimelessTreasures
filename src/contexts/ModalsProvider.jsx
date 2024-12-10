@@ -4,7 +4,7 @@ import { ModalTypes } from "../utils/modalTypes";
 
 export const ModalsContext = createContext();
 
-export const ModalsProvider = ({ children }) => {
+const ModalsProvider = ({ children }) => {
   const [activeItem, setActiveItem] = useState({});
   const [currentModal, setCurrentModal] = useState(ModalTypes.NONE);
 
@@ -28,5 +28,10 @@ export const ModalsProvider = ({ children }) => {
 };
 
 ModalsProvider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element)
-}
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element,
+  ]),
+};
+
+export { ModalsProvider };
