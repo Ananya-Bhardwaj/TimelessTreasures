@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import { itemStatus } from "../utils/itemStatus";
 import { formatField, formatMoney } from "../utils/formatString";
-import { updateProfile } from "firebase/auth";
+import { updateProfile, onAuthStateChanged } from "firebase/auth";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
 import { ModalsContext } from "../contexts/ModalsProvider";
 import { ModalTypes } from "../utils/modalTypes";
+import { useNavigate } from "react-router-dom";
 
 const Modal = ({ type, title, children }) => {
   const { closeModal, currentModal } = useContext(ModalsContext);
@@ -53,6 +54,23 @@ const ItemModal = () => {
   const [isSubmitting, setIsSubmitting] = useState("");
   const [feedback, setFeedback] = useState("");
   const [minBid, setMinBid] = useState("-.--");
+  const [user, setUser] = useState(null); // Store user object
+
+  const navigate = useNavigate();
+
+    // Check if user is authenticated
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        if (currentUser) {
+          setUser(currentUser); // Set user data
+        } else {
+          // Redirect to login page if not logged in
+          navigate("/login");
+        }
+      });
+  
+      return () => unsubscribe(); // Cleanup listener on unmount
+    }, [navigate]);
 
   useEffect(() => {
     if (activeItem.secondaryImage === undefined) return;
@@ -88,7 +106,7 @@ const ItemModal = () => {
       return;
     }
     // Ensure user has provided a username
-    if (auth.currentUser.displayName == null) {
+    if (user == null) {
       setFeedback("You must provide a username before bidding!");
       setValid("is-invalid");
       setTimeout(() => {
@@ -126,10 +144,11 @@ const ItemModal = () => {
     updateDoc(doc(db, "auction", "items"), {
       [formatField(activeItem.id, status.bids + 1)]: {
         amount,
-        uid: auth.currentUser.uid,
+        uid: user.uid,
       },
     });
-    console.debug("handleSubmidBid() write to auction/items");
+    console.debug("handleSubmitBid() write to auction/items");
+    alert("Bid submitted!");
     setValid("is-valid");
     delayedClose();
   };
@@ -203,8 +222,7 @@ const SignUpModal = () => {
     <Modal type={ModalTypes.SIGN_UP} title="Sign up for Markatplace Auction">
       <div className="modal-body">
         <p>
-          We use anonymous authentication provided by Google. Your account is
-          attached to your device signature.
+          Username and password is used to identify you as a bidder. We don&apos;t store any personal information.
         </p>
         <p>The username just lets us know who&apos;s bidding!</p>
         <form onSubmit={(e) => e.preventDefault()}>

@@ -18,6 +18,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
 import CategoryPage from "./pages/CategoryPage";
+import ArtworksPage from "./pages/Artworks";
+import ArtworksChicago from "./pages/Artworks_Chicago";
+import ProductsPage from "./pages/Misc_Sale";
 
 function App() {
   const demo = true;
@@ -68,6 +71,22 @@ function App() {
               <LoginPage />
             }
           />
+           <Route
+            exact
+            path={ "/category"}
+            element={
+              <CategoryPage />
+            }
+          />
+
+            <Route
+            exact
+            path={ "/antiques"}
+            element={
+              <HomePage />
+            }
+          />
+          
           <Route
             exact
             path={"/register"}
@@ -75,6 +94,28 @@ function App() {
               <RegisterPage />
             }
           />
+  
+          <Route
+            exact
+            path={"/artworks"}
+            element={
+              <ArtworksChicago />
+            }
+          />
+          <Route
+            exact
+            path={ "/movie-collectables"}
+            element={
+              <ProductsPage />
+            }
+          />
+          {/* <Route
+            exact
+            path={ "/ticket"}
+            element={
+              <ProductsPage />
+            } */}
+          {/* /> */}
         </Routes>
       </Router>
     </Providers>

@@ -1,62 +1,165 @@
 
-  body, html {
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* Ensures no scroll */
+/* body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; Ensures no scroll 
+}
+
+.landing-page {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+}
+
+.landing-page .content {
+  z-index: 2;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+.navigate-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #444;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.navigate-btn:hover {
+  background-color: #666;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://wallpapercave.com/wp/wp4012944.jpg");  Replace with your image URL 
+  background-size: cover;
+  background-position: center;
+  filter: brightness(60%);
+  z-index: 1;
+} */
+
+
+
+/* Base styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Ensures no scroll */
+}
+
+/* Landing page container */
+.landing-page {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+}
+
+/* Content styles */
+.landing-page .content {
+  z-index: 2;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+/* Button styles */
+.navigate-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #444;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.navigate-btn:hover {
+  background-color: #666;
+  transform: scale(1.05);
+}
+
+/* Background image */
+.background_lp {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://wallpapercave.com/wp/wp4012944.jpg"); /* Replace with your image URL */
+  background-size: cover;
+  background-position: center;
+  filter: brightness(60%);
+  z-index: 1;
+}
+
+/* Footer styles */
+.footer {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #ddd;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .landing-page {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-family: "Poppins", sans-serif;
-    text-align: center;
+  to {
+    opacity: 1;
   }
-  
-  .landing-page .content {
-    z-index: 2;
-  }
-  
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
   .title {
-    font-size: 4rem;
-    font-weight: bold;
+    font-size: 2.5rem;
   }
-  
   .subtitle {
-    font-size: 1.5rem;
-    margin-top: 10px;
-  }
-  
-  .navigate-btn {
-    margin-top: 20px;
-    padding: 10px 20px;
     font-size: 1rem;
-    color: white;
-    background-color: #444;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
   }
-  
-  .navigate-btn:hover {
-    background-color: #666;
+  .navigate-btn {
+    font-size: 0.9rem;
+    padding: 8px 16px;
   }
-  
-  .background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("https://wallpapercave.com/wp/wp4012944.jpg"); /* Replace with your image URL */
-    background-size: cover;
-    background-position: center;
-    filter: brightness(60%);
-    z-index: 1;
-  }
-  
+}

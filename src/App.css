@@ -1,11 +1,23 @@
-*{
+* {
   padding: 0;
-}
-html * {
+  margin: 0; /* Adding margin reset to ensure consistent layout */
+  box-sizing: border-box; /* Ensures consistent sizing across elements */
   font-family: "Roboto", sans-serif;
 }
 
-/* Bootstrap tweaks */
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-y: auto; /* Allow vertical scrolling */
+}
+
+body {
+  display: flex; /* Use flexbox for consistent layout if needed */
+  flex-direction: column; /* Ensures content stacks vertically */
+  min-height: 100vh; /* Ensures body stretches to viewport height */
+}
+
 .card:hover {
   cursor: pointer;
   box-shadow: 0 0 0.2rem gray;

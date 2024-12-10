@@ -1,76 +1,112 @@
-/* General resets */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* General Page Styles */
+/* General Page Styles */
+.category-pager {
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Remove any default padding */
+  font-family: "Poppins", sans-serif;
+  background: url("https://wallpapercave.com/wp/wp4012944.jpg") no-repeat center center fixed;
+  background-size: cover; /* Ensure the image covers the entire area */
+  width: 100vw; /* Make it span the full viewport width */
+  height: 100vh; /* Make it span the full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevent unwanted scrollbars */
+}
+/* General Page Styles */
+.category-pager {
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Remove any default padding */
+  font-family: "Poppins", sans-serif;
+  background: url("https://wallpapercave.com/wp/wp4012944.jpg") no-repeat center center fixed;
+  background-size: cover; /* Ensure the image covers the entire area */
+  width: 100vw; /* Make it span the full viewport width */
+  height: 100vh; /* Make it span the full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevent unwanted scrollbars */
 }
 
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f8f8;
-}
 
 .category-page {
-    position: relative;
-    text-align: center;
-    padding: 50px 20px;
-    background-image: url("https://wallpapercave.com/wp/wp4012944.jpg"); /* Background image */
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed; /* Keeps the background fixed */
-    background-color: rgba(0, 0, 0, 0.5); /* Opaque background */
-    color: white;
-    min-height: 100vh;
+  position: relative;
+
+  height: 100%;
+  
 }
 
+.category-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Overlay */
+  filter: blur(10px); /* Blur effect */
+  z-index: 0;
+}
+
+/* Title */
 .page-title {
-    font-size: 2.5em;
-    color: white;
-    margin-bottom: 30px;
-    font-weight: bold;
+  text-align: center;
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 2rem;
+  z-index: 1;
+  position: relative;
 }
 
+/* Grid Layout for Cards */
 .category-container {
-    display: flex;
-    justify-content: space-between; /* Arrange items in a row */
-    gap: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  z-index: 1;
+  position: relative;
 }
 
+/* Individual Card Styles */
 .category-item {
-    position: relative;
-    background-color: rgba(200, 220, 240, 0.8); /* Light greyish-bluish background */
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-    height: 300px;  /* Fixed height to maintain a consistent look */
-    width: 230px;   /* Fixed width for cards */
-    overflow: hidden;
+  background: rgba(255, 255, 255, 0.6); /* Semi-transparent */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .category-item:hover {
-    transform: scale(1.05);  /* Hover effect to slightly enlarge the card */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
 .category-title {
-    font-size: 1.8em;
-    font-weight: bold;
-    margin-bottom: 10px;
-    z-index: 2;  /* Ensure the title appears on top of any overlay content */
-    color: black;  /* Change title text to black */
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
 }
 
+.category-item:hover .category-title {
+  color: #000;
+}
+
+/* Hover Effect for Description */
 .category-description {
-    font-size: 1.1em;
-    max-width: 70%;
-    margin: 0 auto;
-    opacity: 0;  /* Initially hide the description */
-    color: black;  /* Change description text to black */
-    transition: opacity 0.3s ease-in-out;  /* Smooth transition for description visibility */
+  font-size: 1rem;
+  color: #555;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .category-item:hover .category-description {
-    opacity: 1;  /* Show the description on hover */
+  opacity: 1;
 }
