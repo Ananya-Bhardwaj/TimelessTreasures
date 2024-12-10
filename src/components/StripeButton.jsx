@@ -71,7 +71,7 @@ const StripeButton = ({ priceId }) => {
 
   return (
     <button role="link" onClick={handleClick}>
-      Checkout
+      Pay
     </button>
   );
 };

@@ -291,6 +291,7 @@ const WinnerModal = () => {
           }
         </p>
         <button onClick={(e) => e.preventDefault()}>Pay</button>
+        <StripeButton  priceId={price_1QUWOeSDfaeqN3M50IfhOjDA} />
       </div>
       <div className="modal-footer">
         <button type="button" className="btn btn-secondary" onClick={closeModal}>

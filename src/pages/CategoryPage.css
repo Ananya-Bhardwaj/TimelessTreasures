@@ -1,4 +1,4 @@
-General Page Styles
+/* General Page Styles */
 /* General Page Styles */
 .category-pager {
   margin: 0; /* Remove any default margin */
@@ -30,8 +30,8 @@ General Page Styles
 
 
 .category-page {
-  position: relative;
-
+  position: relativea;
+  width: 100vw;
   height: 100%;
   
 }
