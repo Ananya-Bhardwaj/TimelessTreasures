@@ -24,6 +24,8 @@ import ProductsPage from "./pages/Misc_Sale";
 import { auth, db } from "./firebase/config";
 import { getDoc, doc } from "firebase/firestore";
 import { use } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   const [admin, setAdmin] = useState(false);

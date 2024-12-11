@@ -18,7 +18,7 @@
     "@react-three/fiber": "^8.17.10",
     "@stripe/stripe-js": "^5.2.0",
     "axios": "^1.7.9",
-    "bootstrap": "^5.3.2",
+    "bootstrap": "^5.3.3",
     "firebase": "^10.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.6",
