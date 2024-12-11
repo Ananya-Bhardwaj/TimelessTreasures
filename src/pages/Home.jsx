@@ -18,10 +18,12 @@
 import "./Home.css"; // Adjust the path based on the location of the file
 import Grid from "../components/Grid";
 import { ItemModal } from "../components/Modal";
+import Navbar from '../components/Navbar';
 
 function HomePage() {
   return (
     <>
+    <Navbar />
     <div className="container mt-3">
       <Grid />
       <ItemModal />
