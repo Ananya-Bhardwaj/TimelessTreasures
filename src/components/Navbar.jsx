@@ -27,6 +27,11 @@ const Navbar = () => {
 
   // Check if user is authenticated
   useEffect(() => {
+    if (location.pathname.includes("admin")) {
+      setAdminButtonText("Home");
+    } else {
+      setAdminButtonText("Admin");
+    }
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser); // Set user data
@@ -42,7 +47,7 @@ const Navbar = () => {
   // Handle Admin button toggle between Home and Admin routes
   const handleAdmin = () => {
     if (location.pathname.includes("admin")) {
-      navigate("/"); // Navigate to Home
+      navigate("/app"); // Navigate to Home
       setAdminButtonText("Admin");
     } else {
       navigate("/admin"); // Navigate to Admin Page

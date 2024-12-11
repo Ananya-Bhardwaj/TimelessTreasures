@@ -171,7 +171,7 @@ const ItemModal = () => {
             {winner === auth.currentUser.uid ? (
               <>
               <p>You are the winner for the item!!</p>
-              <StripeButton priceId="price_1QUWOeSDfaeqN3M50IfhOjDA" />
+              <StripeButton priceId={activeItem.priceId?activeItem.priceId:""} />
 
               </>
               ) : ( 
