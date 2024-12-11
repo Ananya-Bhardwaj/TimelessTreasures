@@ -8,7 +8,7 @@ const ProductsPage = () => {
   const [error, setError] = useState(null);
 
   const fetchProducts = async () => {
-    const API_URL = "https://api.artic.edu/api/v1/products";
+    const API_URL = "https://api.artic.edu/api/v1/products?page=5";
 
     try {
       const response = await axios.get(API_URL);
@@ -56,7 +56,9 @@ const ProductsPage = () => {
               <div className="card-body">
                 <h5 className="card-title">{product.title}</h5>
                 <p className="card-text">
-                  {truncateDescription(product.description, 10)}
+                  <div
+                    dangerouslySetInnerHTML={{ __html: truncateDescription(product.description, 10)}}
+                  />
                 </p>
                 <p className="card-text">
                   <strong>Price: </strong>{product.price_display ? product.price_display.replace(/<[^>]*>/g, '') : "$0.00"}
