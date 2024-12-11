@@ -53,10 +53,10 @@ const StripeButton = ({ priceId }) => {
         quantity: 1,
       }],
       mode: 'payment',
-      successUrl: 'https://example.com/success',
-      cancelUrl: 'https://example.com/cancel',
+      successUrl: `${window.location.origin}/app`, // Use /app route on success
+      cancelUrl: `${window.location.origin}/app?status=cancel`, // Use /app route with query parameter on cancellation
       billingAddressCollection: 'required',  // Collect billing address
-      customerEmail: 'customer@example.com', // Optional: pass customer email if available
+      // customerEmail: 'ananya.bhar@gmail.com', // Optional: pass customer email if available
       shippingAddressCollection: {
         allowedCountries: ['IN'], // Ensure the shipping address collection is allowed for India
       },
