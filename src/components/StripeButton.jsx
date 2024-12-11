@@ -70,10 +70,28 @@ const StripeButton = ({ priceId }) => {
   };
 
   return (
-    <button role="link" onClick={handleClick}>
+    <button
+      role="link"
+      onClick={handleClick}
+      style={{
+        padding: '12px 24px',
+        backgroundColor: '#008080',  // Teal color
+        color: 'white',
+        border: 'none',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        fontSize: '16px',
+        fontWeight: 'bold',
+        transition: 'background-color 0.3s ease',
+      }}
+      onMouseEnter={(e) => e.target.style.backgroundColor = '#006666'} // Darker teal on hover
+      onMouseLeave={(e) => e.target.style.backgroundColor = '#008080'} // Back to original color
+    >
       Pay
     </button>
   );
+  
+  
 };
 
 export default StripeButton;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import StripeButton from "../components/StripeButton";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -63,14 +64,16 @@ const ProductsPage = () => {
                 <p className="card-text">
                   <strong>Price: </strong>{product.price_display ? product.price_display.replace(/<[^>]*>/g, '') : "$0.00"}
                 </p>
-                <a
+                {/* <a
                   href={product.web_url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-primary"
                 >
                   View Details
-                </a>
+                </a> */}
+
+                <StripeButton priceId="price_1QUjPuSDfaeqN3M5tUpup7vY"/>
               </div>
             </div>
           </div>
