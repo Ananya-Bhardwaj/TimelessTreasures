@@ -63,36 +63,34 @@ const Navbar = () => {
 
   return (
     <nav className="navbar navbar-dark bg-primary">
-      <div className="container-fluid">
-        <div className="navbar-brand mb-0 h1 me-auto">
-          {/* <img
-            src={import.meta.env.BASE_URL + "logo.png"}
-            alt="Logo"
-            width="30"
-            height="24"
-            className="d-inline-block align-text-top"
-          /> */}
-          Timeless Treasures
-        </div>
-        <div className="row row-cols-auto">
-          <div className="navbar-brand">{user && `Hi ${user.email}`}</div>
-          {admin && (
-            <button
-              onClick={handleAdmin}
-              className="btn btn-secondary me-2"
-            >
-              {adminButtonText}
-            </button>
-          )}
-          <button
-            onClick={handleLogout}
-            className="btn btn-secondary me-2"
-          >
-            Logout
-          </button>
-        </div>
+    <div className="container-fluid d-flex align-items-center">
+      {/* Brand with Logo and Text */}
+      <div className="d-flex align-items-center me-auto">
+        <img
+          src={"logo.png"}
+          alt="Logo"
+          width="80"
+          height="70"
+          className="d-inline-block align-text-top me-2"
+        />
+        <span className="navbar-brand mb-0 h1">Timeless Treasures</span>
       </div>
-    </nav>
+  
+      {/* User Info and Buttons */}
+      <div className="row row-cols-auto align-items-center">
+        <div className="navbar-brand">{user && `Hi ${user.email}`}</div>
+        {admin && (
+          <button onClick={handleAdmin} className="btn btn-secondary me-2">
+            {adminButtonText}
+          </button>
+        )}
+        <button onClick={handleLogout} className="btn btn-secondary me-2">
+          Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+  
   );
 };
 
